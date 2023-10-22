@@ -1,0 +1,161 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Expense</title>
+<script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+    $("#deleteExpense").hide();
+     $("#updateExpense").hide();
+    
+    $("#update").click(function(){
+        $("#updateExpense").show();
+        $("#deleteExpense").hide();
+    });
+    $("#delete").click(function(){
+        $("#deleteExpense").show();
+         $("#updateExpense").hide();
+    });
+});
+
+</script>
+</head>
+<body class="container container-fluid">
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Expense Manager Anish Gogia 19csu029</a>
+      <a  class="btn btn-outline-danger">Logout</a>
+      </div>
+  </nav>
+	<div id="add">
+		<h1 style="margin-left:450px" >Add Expense</h1>
+		<br><br>
+    
+		<form action="ExpenseController" method="GET">
+			<table class="table">
+				<tr >
+					<td>Name </td>
+          <br>
+					<td><input type="text" class="form-control col-md-5" placeholder="Expense Name" name="name"></td>
+				</tr>
+				<tr >
+					<td>Description</td>
+					<td><input type="text" class="form-control col-md-5" placeholder="Expense Name" name="descp"></td>
+				</tr>
+				<tr >
+					<td>Cost</td>
+					<td><input type="text" class="form-control col-md-5" placeholder="Expense Cost" name="cost"></td>
+				</tr>
+				
+
+				
+			</table>
+		<div>
+      <center>
+		<button class="btn btn-primary col-md-3" type="submit" name="addExpense" value="Add">ADD</button>
+		<button class="btn btn-warning  col-md-3" type="submit" formmethod="post" name="showExpense" value="Show">SHOW</button>
+	</center>
+  </div>
+		</form>
+  
+	</div>
+    <div class="mt-3">
+      <center>
+		<h1>All Expenses</h1>
+  </center>
+		<br>
+		<table class="table text-danger">
+			<thead>
+				<tr>
+					<th scope="col">ID</th>
+					<th scope="col">Expense Name</th>
+					<th scope="col">Expense Description</th>
+					<th scope="col">Expense Price</th>
+					<th scope="col">Expense Date</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach var="exp" items="${ExpenseList}">
+					<!-- <tr>
+						<th scope="row">1</th>
+						<td>Milk</td>
+						<td>Bought By Anish on Monday</td>
+						<td>120</td>
+						<td>2022-8-17 18:41:57</td>
+					</tr> -->
+          <tr>
+						<th scope="row">2</th>
+						<td>Coffee/Milk</td>
+						<td>Bought for Anish on 12th</td>
+						<td>60</td>
+						<td>2022-8-17 18:42:45</td>
+					</tr>
+				</c:forEach>
+
+			</tbody>
+		</table>
+		<form name="formid" action="ExpenseController" method="POST">
+      <center>
+			<br>Select ID of Expense for update or delete: 
+      <br>
+       <select class="browser-default custom-select col-md-3 " name="id" onchange="document.getElementById('butn').click()">
+			    <!-- <option value="">1</option> -->
+          <option value="">2</option>
+				<!-- <c:forEach items="${ExpenseList}" var="Expense">
+     			
+     				<option value="${Expense.id}" ${record.id == Expense.id ? 'selected' : ''}>${Expense.id}</option>
+     				
+				</c:forEach> -->
+			</select> 
+    </center>
+			<input class="btn btn-white mt-2" type="submit" hidden="true" id="butn" value="Fill existing field values" name="showInfo" formmethod="get">
+			<br>
+			<br>
+			<center>
+			<button class="btn btn-primary col-md-3" id="update" name="choice" onclick="document.getElementById('hiddenUpdate').hidden=!this.checked;" ${empty record ? 'disabled': ''}>   Update
+			<div><button class="btn btn-danger col-md-3" id="delete" name="choice" 
+				onclick="document.getElementById('hiddenUpdate').hidden=this.checked;" ${empty record ? 'disabled': ''}>   Delete<br>
+				</div>
+      </center>
+			<div id="hiddenUpdate" hidden >
+			<table class="table mt-3">
+				<tr >
+					<td>Update Expense Name:</td>
+					<td><input type="text" id="nameupdate" name="nameupdate" value="Coffee"></td>
+				</tr>
+				<tr >
+					<td>Update Expense Description:</td>
+					<td><input type="text" id="descpupdate" name="descpupdate" value="Bought for Anish"></td>
+				</tr>
+				<tr >
+					<td>Update Expense Price:</td>
+					<td><input type="text" id="costupdate" name="costupdate" value="50" ></td>
+				</tr>
+			</table>
+      <center>
+      <button type="submit" class="btn btn-success col-md-3" name="updateExpense">
+				submit </button>
+      </center>
+			</div>	
+			
+			<br> <br>
+			<button class="btn btn-danger" type="submit" id="deleteExpense" name="deleteExpense">
+				DELETE</button>
+
+
+
+
+		</form>
+	</div>
+	
+</body>
+</html>

@@ -1,0 +1,171 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1" isELIgnored="false"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %> 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
+    <script>
+      function showDiv(i){
+        let element2 = document.getElementById("select"+i);
+        console.log("anish gogia");
+        console.log(element2.value);
+        let element = document.getElementById("mytextarea"+i);
+        let hidden = element.getAttribute("hidden");
+        if (element2.value=="Select") {
+       element.removeAttribute("hidden");
+    } else {
+       element.setAttribute("hidden", "hidden");
+    }
+      }
+
+      submitForms = function(){
+    document.getElementById("form1").submit();
+    document.getElementById("form2").submit();
+}
+    </script>   
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">Navbar</a>
+          <a  class="btn btn-outline-danger">Logout</a>
+          </div>
+      </nav>
+      
+   
+    
+      <!-- <div class = "col-md-5">
+        <form:form  method="POST" modelAttribute="competetion" action="success" id ="form1">
+            <form:input type="hidden" path="id"/>
+             <div class="card-body">
+             <div class="form-group">
+            <label for="URL">URL</label>
+            <form:input type="text" class="form-control" path="url"/>
+            <form:errors path="url" cssClass="error" />
+            <span class="text-danger">
+             <form:errors path="url" cssClass="error" />
+             ${message}
+            </span>
+             </div>
+             <div class="form-group">
+               <label for="URL">FINAL URL</label>
+               <form:input type="text" class="form-control" path="finalurl"/>
+               <form:errors path="finalurl" cssClass="error" />
+                </div>
+             <div class="form-group">
+             <label>Form No. </label>
+            <form:input type="number" class="form-control" path="formno"/>
+           </div>
+           <div class="form-group">
+             <label>No. Of Fields</label>
+            <form:input type="number" path="numberfields" class="form-control" />
+         </div>
+         <div class="form-group">
+             <label>Start Date</label>
+            <form:input type="date" path="startDate" class="form-control"/>
+         </div>
+         <div class="form-group">
+             <label>End Date</label>
+           <form:input type="date" path="endDate" name="endDate" class="form-control"/>
+         </div>
+         </div>
+        </form:form>
+        </div> -->
+        <div class ="ml-5"> 
+        <form:form modelAttribute="entityWrapper" id ="form2" action="success">
+          <div class="card-body">
+
+            <div class="row">
+                <div class="col-1">
+                    <label for="">S. No. </label> 
+                </div>
+                <div class="col-3">
+                    <label for="">FieldType </label> 
+                </div>
+              <div class="col-2">
+                <label for="">FieldName </label> 
+              </div>
+              <div class="col-2">
+                <label for="">FieldId </label> 
+              </div>
+              <div class="col-3">
+                <label for="">UserMapping </label> 
+              </div>
+            </div>
+        </div>
+
+        <c:forEach items="${entityWrapper.entityList}" varStatus="i">
+          <div class="card-body">
+            <div class="row">
+                <div class="col-1">
+                    <label for=""> ${i.index+1} </label>
+                  </div>
+              <div class="col-3">
+            <form:select id = "select${i.index}" path = "entityList[${i.index}].fieldtype" class="form-control" onchange= "showDiv(${i.index})">
+            <form:option value="TextInput" label="TextInput"/>
+             <form:option value="EmailInput" label="EmailInput"/>
+             <form:option value="NumberInput" label="NumberInput"/>
+             <form:option value="PasswordInput" label="PasswordInput"/>
+             <form:option value="Button" label="Button"/>
+             <form:option value="SubmitInput" label="SubmitInput"/>
+             <form:option value="TextArea" label="TextArea"/>
+             <form:option value="CheckBox" label="CheckBox"/>
+             <form:option value="Select" label="Select"/>
+             <form:option value="RadioButton" label="RadioButton"/>
+             </form:select>
+           
+              </div>
+              <div class="col-2">
+                <form:input type="text" path ="entityList[${i.index}].fieldname" class="form-control"/>
+              </div>
+              <div class="col-2">
+                <form:input type="text" path ="entityList[${i.index}].fieldid" class="form-control"/>
+              </div>
+              <form:input type="hidden" path="entityList[${i.index}].id"/>
+              <form:input type="hidden" path="entityList[${i.index}].competetionid"/>
+              <div class="col-3">
+                <form:select  path ="entityList[${i.index}].userData" class="form-control">
+        <form:option value="FirstName" label="FirstName"/>
+        <form:option value="LastName" label="LastName"/>
+        <form:option value="Email" label="Email"/>
+        <form:option value="Phone No." label="Phone No."/>
+        <form:option value="Address" label="Address"/>
+        <form:option value="Postcode" label="Postcode"/>
+        <form:option value="City" label="City"/>
+        <form:option value="Suburb" label="Suburb"/>
+        <form:option value="Country" label="Country"/>
+        <form:option value="Password" label="Password"/>
+        <form:option value="Button/Checkbox/SubmitInput"  label="Button/Checkbox/SubmitInput"/>
+       
+                </form:select>
+              </div>
+
+            </div>
+            <div class = "row">
+              <div class = "col-3"></div>
+              <div class="col-6 mt-3">
+                <form:textarea id = "mytextarea${i.index}" path = "entityList[${i.index}].code" class="form-control" hidden="hidden"/>
+              </div>
+            </div>
+          </div>
+        </c:forEach>
+        <div class="text-center">
+          <input type="submit" value="Submit" class="btn btn-primary col-md-3">
+             </div>
+    </form:form> 
+  </div>
+      
+</body>
+</html>
